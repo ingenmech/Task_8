@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.example.com/devices"
+        xmlns:tns="http://www.example.com/devices" elementFormDefault="qualified">
+    <complexType name="AbstractComputerParts">
+        <sequence>
+            <element name="manufacturer" type="string"/>
+        </sequence>
+        <attribute name="id" type="ID" use="required"/>
+        <attribute name="name" type="string" default="N/A"/>
+    </complexType>
+    <complexType name="Processor">
+        <complexContent>
+            <extension base="tns:AbstractComputerParts">
+                <sequence>
+                    <element name="frequencyCore" type="string"/>
+                    <element name="coresNumber">
+                        <simpleType>
+                            <restriction base="int">
+                                <pattern value="[1-8]{1,2}"/>
+                            </restriction>
+                        </simpleType>
+                    </element>
+                    <element name="processorType">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="GPU"/>
+                                <enumeration value="CPU"/>
+                            </restriction>
+                        </simpleType>
+                    </element>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="Board">
+        <complexContent>
+            <extension base="tns:AbstractComputerParts">
+                <sequence>
+                    <element name="type">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="GAMING"/>
+                                <enumeration value="PROFESSIONAL"/>
+                            </restriction>
+                        </simpleType>
+                    </element>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="MotherBoard">
+        <complexContent>
+            <extension base="tns:Board">
+                <sequence>
+                    <element name="configuration">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="eATX"/>
+                                <enumeration value="mATX"/>
+                                <enumeration value="ATX"/>
+                            </restriction>
+                        </simpleType>
+                    </element>
+                    <element name="processor" type="tns:Processor"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="VideoCard">
+        <complexContent>
+            <extension base="tns:Board">
+                <sequence>
+                    <element name="memoryRAM" type="string"/>
+                    <element name="processor" type="tns:Processor"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <element name="parts" type="tns:AbstractComputerParts" abstract="true"/>
+    <element name="board" type="tns:Board" substitutionGroup="tns:parts"/>
+    <element name="motherBoard" type="tns:MotherBoard" substitutionGroup="tns:board"/>
+    <element name="videoCard" type="tns:VideoCard" substitutionGroup="tns:board"/>
+    <element name="processor" type="tns:Processor" substitutionGroup="tns:parts"/>
+    <element name="devices">
+        <complexType>
+            <sequence>
+                <element ref="tns:parts" minOccurs="2" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+</schema>

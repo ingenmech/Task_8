@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<devices xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://www.example.com/devices"
+         xsi:schemaLocation="http://www.example.com/devices devicesSchema.xsd">
+    <motherBoard id="ID-1" name="MB_A1">
+        <manufacturer>Asus</manufacturer>
+        <type>PROFESSIONAL</type>
+        <configuration>ATX</configuration>
+        <processor id="ID-2" name="i7">
+            <manufacturer>Intel</manufacturer>
+            <frequencyCore>2100</frequencyCore>
+            <coresNumber>4</coresNumber>
+            <processorType>CPU</processorType>
+        </processor>
+    </motherBoard>
+    <videoCard id="ID-3">
+        <manufacturer>Asus</manufacturer>
+        <type>GAMING</type>
+        <memoryRAM>4</memoryRAM>
+        <processor id="ID-4" name="i3">
+            <manufacturer>NVIDIA</manufacturer>
+            <frequencyCore>2100</frequencyCore>
+            <coresNumber>4</coresNumber>
+            <processorType>GPU</processorType>
+        </processor>
+    </videoCard>
+    <motherBoard id="ID-5" name="ZEN_A1">
+        <manufacturer>GIGABYTE</manufacturer>
+        <type>GAMING</type>
+        <configuration>mATX</configuration>
+        <processor id="ID-6">
+            <manufacturer>Intel</manufacturer>
+            <frequencyCore>2100</frequencyCore>
+            <coresNumber>4</coresNumber>
+            <processorType>CPU</processorType>
+        </processor>
+    </motherBoard>
+    <videoCard id="ID-7" name="VEGA">
+        <manufacturer>AMD</manufacturer>
+        <type>PROFESSIONAL</type>
+        <memoryRAM>16</memoryRAM>
+        <processor id="ID-8">
+            <manufacturer>AMD</manufacturer>
+            <frequencyCore>2100</frequencyCore>
+            <coresNumber>4</coresNumber>
+            <processorType>GPU</processorType>
+        </processor>
+    </videoCard>
+    <processor id="ID-9" name="FX8300">
+        <manufacturer>AMD</manufacturer>
+        <frequencyCore>2100</frequencyCore>
+        <coresNumber>4</coresNumber>
+        <processorType>CPU</processorType>
+    </processor>
+    <processor id="ID-10" name="Ryzen3500">
+        <manufacturer>AMD</manufacturer>
+        <frequencyCore>2100</frequencyCore>
+        <coresNumber>8</coresNumber>
+        <processorType>CPU</processorType>
+    </processor>
+</devices>
