@@ -13,15 +13,15 @@
         <complexContent>
             <extension base="tns:AbstractComputerParts">
                 <sequence>
-                    <element name="frequencyCore" type="string"/>
-                    <element name="coresNumber">
+                    <element name="frequency-core" type="string"/>
+                    <element name="cores-number">
                         <simpleType>
                             <restriction base="int">
                                 <pattern value="[1-8]{1,2}"/>
                             </restriction>
                         </simpleType>
                     </element>
-                    <element name="processorType">
+                    <element name="processor-type">
                         <simpleType>
                             <restriction base="string">
                                 <enumeration value="GPU"/>
@@ -33,25 +33,9 @@
             </extension>
         </complexContent>
     </complexType>
-    <complexType name="Board">
-        <complexContent>
-            <extension base="tns:AbstractComputerParts">
-                <sequence>
-                    <element name="type">
-                        <simpleType>
-                            <restriction base="string">
-                                <enumeration value="GAMING"/>
-                                <enumeration value="PROFESSIONAL"/>
-                            </restriction>
-                        </simpleType>
-                    </element>
-                </sequence>
-            </extension>
-        </complexContent>
-    </complexType>
     <complexType name="MotherBoard">
         <complexContent>
-            <extension base="tns:Board">
+            <extension base="tns:AbstractComputerParts">
                 <sequence>
                     <element name="configuration">
                         <simpleType>
@@ -69,18 +53,17 @@
     </complexType>
     <complexType name="VideoCard">
         <complexContent>
-            <extension base="tns:Board">
+            <extension base="tns:AbstractComputerParts">
                 <sequence>
-                    <element name="memoryRAM" type="string"/>
+                    <element name="memory-ram" type="string"/>
                     <element name="processor" type="tns:Processor"/>
                 </sequence>
             </extension>
         </complexContent>
     </complexType>
     <element name="parts" type="tns:AbstractComputerParts" abstract="true"/>
-    <element name="board" type="tns:Board" substitutionGroup="tns:parts"/>
-    <element name="motherBoard" type="tns:MotherBoard" substitutionGroup="tns:board"/>
-    <element name="videoCard" type="tns:VideoCard" substitutionGroup="tns:board"/>
+    <element name="mother-board" type="tns:MotherBoard" substitutionGroup="tns:parts"/>
+    <element name="video-card" type="tns:VideoCard" substitutionGroup="tns:parts"/>
     <element name="processor" type="tns:Processor" substitutionGroup="tns:parts"/>
     <element name="devices">
         <complexType>
