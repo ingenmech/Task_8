@@ -19,7 +19,6 @@ public abstract class AbstractComputerDevice {
     private String manufacturer;
 
     public AbstractComputerDevice() {
-
     }
 
     public AbstractComputerDevice(String id, String name, String manufacturer) {

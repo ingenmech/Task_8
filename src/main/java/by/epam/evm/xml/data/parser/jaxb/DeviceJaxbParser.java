@@ -1,6 +1,6 @@
 package by.epam.evm.xml.data.parser.jaxb;
 
-import by.epam.evm.xml.data.parser.Parser;
+import by.epam.evm.xml.data.parser.AbstractParser;
 import by.epam.evm.xml.data.parser.ParserException;
 import by.epam.evm.xml.model.AbstractComputerDevice;
 import org.apache.logging.log4j.LogManager;
@@ -14,7 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
-public class DeviceJaxbParser implements Parser {
+public class DeviceJaxbParser extends AbstractParser {
 
     private final static Logger LOGGER = LogManager.getLogger(DeviceJaxbParser.class);
 

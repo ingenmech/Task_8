@@ -1,7 +1,6 @@
 package by.epam.evm.xml.data.parser.dom;
 
-import by.epam.evm.xml.data.parser.DeviceFactory;
-import by.epam.evm.xml.data.parser.Parser;
+import by.epam.evm.xml.data.parser.AbstractParser;
 import by.epam.evm.xml.data.parser.ParserException;
 import by.epam.evm.xml.model.*;
 import org.w3c.dom.Document;
@@ -17,28 +16,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeviceDomParser implements Parser {
-
-    private final static String ID = "id";
-    private final static String NAME = "name";
-    private final static String MANUFACTURER = "manufacturer";
-    private final static String CONFIGURATION = "configuration";
-    private final static String MEMORY_RAM = "memory-ram";
-    private final static String NESTED_PROCESSOR = "nested-processor";
-    private final static String FREQUENCY_CORE = "frequency-core";
-    private final static String CORES_NUMBER = "cores-number";
+public class DeviceDomParser extends AbstractParser {
 
     private final static int FIRST_CONTENT = 0;
 
-    private final DeviceFactory factory;
-
     public DeviceDomParser() {
-        this.factory = new DeviceFactory();
-    }
-
-    //package private for test
-    DeviceDomParser(DeviceFactory factory) {
-        this.factory = factory;
     }
 
     @Override
@@ -56,7 +38,7 @@ public class DeviceDomParser implements Parser {
             for (int i = 0; i < deviceNodes.getLength(); i++) {
                 if (deviceNodes.item(i) instanceof Element) {
                     Element deviceElement = (Element) deviceNodes.item(i);
-                    AbstractComputerDevice device = parseDevice(deviceElement);
+                    AbstractComputerDevice device = buildDevice(deviceElement);
                     devices.add(device);
                 }
             }
@@ -66,9 +48,10 @@ public class DeviceDomParser implements Parser {
         return devices;
     }
 
-    private AbstractComputerDevice parseDevice(Element deviceElement) {
+    private AbstractComputerDevice buildDevice(Element deviceElement) {
 
-        AbstractComputerDevice device = factory.createDevice(deviceElement.getNodeName());
+        String deviceName = deviceElement.getNodeName();
+        AbstractComputerDevice device = AbstractParser.createDevice(deviceName);
         String id = deviceElement.getAttribute(ID);
         device.setId(id);
         String name = deviceElement.getAttribute(NAME);
@@ -77,36 +60,43 @@ public class DeviceDomParser implements Parser {
         }
         device.setManufacturer(getElementContent(deviceElement, MANUFACTURER));
 
-        if (device instanceof MotherBoard) {
-
-            String content = getElementContent(deviceElement, CONFIGURATION);
-            MotherBoardType type = MotherBoardType.valueOf(content);
-            ((MotherBoard) device).setConfiguration(type);
-            Processor nestedProcessor = parseNestedProcessor(deviceElement);
-            ((MotherBoard) device).setProcessor(nestedProcessor);
-
-        } else if (device instanceof VideoCard) {
-
-            String content = getElementContent(deviceElement, MEMORY_RAM);
-            int memory = Integer.parseInt(content);
-            ((VideoCard) device).setMemoryRam(memory);
-            Processor nestedProcessor = parseNestedProcessor(deviceElement);
-            ((VideoCard) device).setProcessor(nestedProcessor);
-
-        } else if (device instanceof Processor) {
-
-            String content = getElementContent(deviceElement, CORES_NUMBER);
-            int number = Integer.parseInt(content);
-            ((Processor) device).setCoresNumber(number);
-
-            content = getElementContent(deviceElement, FREQUENCY_CORE);
-            number = Integer.parseInt(content);
-            ((Processor) device).setFrequencyCore(number);
+        if (MOTHERBOARD.equals(deviceName)) {
+            buildMotherBoard(deviceElement, (MotherBoard) device);
+        } else if (VIDEO_CARD.equals(deviceName)) {
+            buildVideoCard(deviceElement, (VideoCard) device);
+        } else if (PROCESSOR.equals(deviceName)) {
+            buildProcessor(deviceElement, (Processor) device);
         }
         return device;
     }
 
-    private Processor parseNestedProcessor(Element deviceElement) {
+    private void buildProcessor(Element deviceElement, Processor device) {
+        String content = getElementContent(deviceElement, CORES_NUMBER);
+        int number = Integer.parseInt(content);
+        device.setCoresNumber(number);
+
+        content = getElementContent(deviceElement, FREQUENCY_CORE);
+        number = Integer.parseInt(content);
+        device.setFrequencyCore(number);
+    }
+
+    private void buildMotherBoard(Element deviceElement, MotherBoard device) {
+        String content = getElementContent(deviceElement, CONFIGURATION);
+        MotherBoardType type = MotherBoardType.valueOf(content);
+        device.setConfiguration(type);
+        Processor nestedProcessor = buildNestedProcessor(deviceElement);
+        device.setProcessor(nestedProcessor);
+    }
+
+    private void buildVideoCard(Element deviceElement, VideoCard device) {
+        String content = getElementContent(deviceElement, MEMORY_RAM);
+        int memory = Integer.parseInt(content);
+        device.setMemoryRam(memory);
+        Processor nestedProcessor = buildNestedProcessor(deviceElement);
+        device.setProcessor(nestedProcessor);
+    }
+
+    private Processor buildNestedProcessor(Element deviceElement) {
 
         NodeList nestedElements = deviceElement.getElementsByTagName(NESTED_PROCESSOR);
         Element processorElement = (Element) nestedElements.item(FIRST_CONTENT);

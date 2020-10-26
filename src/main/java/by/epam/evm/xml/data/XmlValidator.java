@@ -27,6 +27,7 @@ public class XmlValidator {
         String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
         SchemaFactory factory = SchemaFactory.newInstance(language);
         boolean isValid;
+
         try {
             Schema schema = factory.newSchema(new File(schemaName));
             Validator validator = schema.newValidator();

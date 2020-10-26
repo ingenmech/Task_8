@@ -1,6 +1,6 @@
 package by.epam.evm.xml.data.parser.sax;
 
-import by.epam.evm.xml.data.parser.DeviceFactory;
+import by.epam.evm.xml.data.parser.AbstractParser;
 import by.epam.evm.xml.model.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -9,40 +9,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static by.epam.evm.xml.data.parser.AbstractParser.*;
+
+//used static import AbstractParser.* for static constant fields
 public class DevicesHandler extends DefaultHandler {
 
-    //    private String field = null;
-//    private EnumSet<DeviceField> fields;
+    private final static List<String> FIELD_VALUES = Arrays.asList(
+            MANUFACTURER, CONFIGURATION, MEMORY_RAM, NESTED_PROCESSOR, FREQUENCY_CORE, CORES_NUMBER);
+    private final List<AbstractComputerDevice> devices = new ArrayList<>();
 
-    private final static String MOTHERBOARD = "motherboard";
-    private final static String VIDEO_CARD = "video-card";
-    private final static String PROCESSOR = "processor";
-
-    private final static String ID = "id";
-    private final static String NAME = "name";
-    private final static String MANUFACTURER = "manufacturer";
-    private final static String CONFIGURATION = "configuration";
-    private final static String MEMORY_RAM = "memory-ram";
-    private final static String NESTED_PROCESSOR = "nested-processor";
-    private final static String FREQUENCY_CORE = "frequency-core";
-    private final static String CORES_NUMBER = "cores-number";
-
-    private final List<String> fieldValues;
-    private final DeviceFactory factory;
-    private List<AbstractComputerDevice> devices;
     private AbstractComputerDevice device = null;
     private String currentField = null;
     private Processor nestedProcessor = null;
 
-    public DevicesHandler(DeviceFactory factory) {
-        this.factory = factory;
-        devices = new ArrayList<>();
-        fieldValues = Arrays.asList(MANUFACTURER, CONFIGURATION, MEMORY_RAM,
-                NESTED_PROCESSOR, FREQUENCY_CORE, CORES_NUMBER);
-
-//        DeviceField startFiled = DeviceField.MANUFACTURER;
-//        DeviceField endField = DeviceField.CORES_NUMBER;
-//        fields = EnumSet.range(startFiled, endField);
+    public DevicesHandler() {
     }
 
     public List<AbstractComputerDevice> getDevices() {
@@ -52,33 +32,17 @@ public class DevicesHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) {
 
-//        String id;
-//        String name;
-
-//        DeviceField field = DeviceField.ID;
-//        String fieldId = field.getValue();
-//        field = DeviceField.NAME;
-//        String fieldName = field.getValue();
-
         if (MOTHERBOARD.equals(localName) || VIDEO_CARD.equals(localName) || PROCESSOR.equals(localName)) {
-            device = factory.createDevice(localName);
+            device = AbstractParser.createDevice(localName);
             String id = attributes.getValue(ID);
             device.setId(id);
             if (attributes.getLength() == 2) {
                 String name = attributes.getValue(NAME);
                 device.setName(name);
             }
-        } else {
 
-//            String fieldName = localName.toUpperCase();
-//            DeviceField currentField = DeviceField.valueOf(fieldName);
-//            if (fields.contains(currentField)) {
-//                this.currentField = currentField;
-//            }
-
-            if (fieldValues.contains(localName)) {
-                currentField = localName;
-            }
+        } else if (FIELD_VALUES.contains(localName)) {  // check name field, localName can contain device name
+            currentField = localName;
 
             if (NESTED_PROCESSOR.equals(currentField)) {
                 nestedProcessor = new Processor();
