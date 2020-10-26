@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<devices xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://www.example.com/devices"
+         xsi:schemaLocation="http://www.example.com/devices devicesSchema.xsd">
+    <motherboar id="ID-1" name="MB_A1">
+        <manufacturer>Asus</manufacturer>
+        <configuration>ATX</configuration>
+        <nested-processor id="ID-2" name="i7">
+            <manufacturer>Intel</manufacturer>
+            <frequency-core>2100</frequency-core>
+            <cores-number>4</cores-number>
+        </nested-processor>
+    </motherboar>
+    <video-card id="ID-3">
+        <manufacturer>Asus</manufacturer>
+        <memory-ram>4</memory-ram>
+        <nested-processor id="ID-4" name="Cuda">
+            <manufacturer>NVIDIA</manufacturer>
+            <frequency-core>2100</frequency-core>
+            <cores-number>4</cores-number>
+        </nested-processor>
+    </video-card>
+    <mothrboard id="ID-5" name="ZEN_A1">
+        <manufacturer>GIGABYTE</manufacturer>
+        <configuration>M_ATX</configuration>
+        <nested-processor id="ID-6">
+            <manufacturer>Intel</manufacturer>
+            <frequency-core>2100</frequency-core>
+            <cores-number>4</cores-number>
+        </nested-processor>
+    </mothrboard>
+    <video-card id="ID-7" name="VEGA">
+        <manufacturer>AMD</manufacturer>
+        <memory-ram>16</memory-ram>
+        <nested-processor id="ID-8">
+            <manufacturer>AMD</manufacturer>
+            <frequency-core>2100</frequency-core>
+            <cores-number>4</cores-number>
+        </nested-processor>
+    </video-card>
+    <processor id="ID-9" name="FX8300">
+        <manufacturer>AMD</manufacturer>
+        <frequency-core>2100</frequency-core>
+        <cores-number>4</cores-number>
+    </processor>
+    <processor id="ID-10" name="Ryzen3500">
+        <manufacturer>AMD</manufacturer>
+        <frequency-core>2100</frequency-core>
+        <cores-number>8</cores-number>
+    </processor>
+</devices>
