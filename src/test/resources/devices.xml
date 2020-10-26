@@ -2,56 +2,50 @@
 <devices xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://www.example.com/devices"
          xsi:schemaLocation="http://www.example.com/devices devicesSchema.xsd">
-    <mother-board id="ID-1" name="MB_A1">
+    <motherboard id="ID-1" name="MB_A1">
         <manufacturer>Asus</manufacturer>
         <configuration>ATX</configuration>
-        <processor id="ID-2" name="i7">
+        <nested-processor id="ID-2" name="i7">
             <manufacturer>Intel</manufacturer>
             <frequency-core>2100</frequency-core>
             <cores-number>4</cores-number>
-            <processor-type>CPU</processor-type>
-        </processor>
-    </mother-board>
+        </nested-processor>
+    </motherboard>
     <video-card id="ID-3">
         <manufacturer>Asus</manufacturer>
         <memory-ram>4</memory-ram>
-        <processor id="ID-4" name="i3">
+        <nested-processor id="ID-4" name="Cuda">
             <manufacturer>NVIDIA</manufacturer>
             <frequency-core>2100</frequency-core>
             <cores-number>4</cores-number>
-            <processor-type>GPU</processor-type>
-        </processor>
+        </nested-processor>
     </video-card>
-    <mother-board id="ID-5" name="ZEN_A1">
+    <motherboard id="ID-5" name="ZEN_A1">
         <manufacturer>GIGABYTE</manufacturer>
-        <configuration>mATX</configuration>
-        <processor id="ID-6">
+        <configuration>M_ATX</configuration>
+        <nested-processor id="ID-6">
             <manufacturer>Intel</manufacturer>
             <frequency-core>2100</frequency-core>
             <cores-number>4</cores-number>
-            <processor-type>CPU</processor-type>
-        </processor>
-    </mother-board>
+        </nested-processor>
+    </motherboard>
     <video-card id="ID-7" name="VEGA">
         <manufacturer>AMD</manufacturer>
         <memory-ram>16</memory-ram>
-        <processor id="ID-8">
+        <nested-processor id="ID-8">
             <manufacturer>AMD</manufacturer>
             <frequency-core>2100</frequency-core>
             <cores-number>4</cores-number>
-            <processor-type>GPU</processor-type>
-        </processor>
+        </nested-processor>
     </video-card>
     <processor id="ID-9" name="FX8300">
         <manufacturer>AMD</manufacturer>
         <frequency-core>2100</frequency-core>
         <cores-number>4</cores-number>
-        <processor-type>CPU</processor-type>
     </processor>
     <processor id="ID-10" name="Ryzen3500">
         <manufacturer>AMD</manufacturer>
         <frequency-core>2100</frequency-core>
         <cores-number>8</cores-number>
-        <processor-type>CPU</processor-type>
     </processor>
 </devices>
